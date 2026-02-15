@@ -1,0 +1,702 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Yomic Software Solutions</title>
+    <style>
+        /* ========================================
+           GLOBAL STYLES
+        ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+        }
+
+        :root {
+            --primary-green: #10b981;
+            --primary-blue: #3b82f6;
+            --primary-red: #ef4444;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-light: #e5e7eb;
+            --hover-bg: #f9fafb;
+            --whatsapp-green: #25D366;
+        }
+
+        /* ========================================
+           NAVIGATION BAR
+        ======================================== */
+        .navbar {
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-green);
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+        }
+
+        /* ========================================
+           MAIN CONTENT CONTAINER
+        ======================================== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .page-header h1 span {
+            color: var(--primary-blue);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========================================
+           SECTION STYLES
+        ======================================== */
+        .pricing-section {
+            margin-bottom: 5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* ========================================
+           PRICING CARDS
+        ======================================== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            background: #ffffff;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-green);
+        }
+
+        /* Featured Card (Managed Plan) */
+        .pricing-card.featured {
+            border-color: var(--primary-green);
+            border-width: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.featured::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--primary-green);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card-price {
+            margin-bottom: 1.5rem;
+        }
+
+        .price-main {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: block;
+        }
+
+        .price-label {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            display: block;
+            margin-top: 0.3rem;
+        }
+
+        .price-breakdown {
+            background: var(--hover-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-breakdown p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-breakdown p:last-child {
+            margin-bottom: 0;
+        }
+
+        .price-breakdown strong {
+            color: var(--primary-green);
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-features li {
+            padding: 0.7rem 0;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+
+        .card-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        /* Call to Action Button */
+        .btn-cta {
+            display: inline-block;
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-cta:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-whatsapp {
+            background: var(--whatsapp-green);
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+        }
+
+        /* ========================================
+           FLOATING WHATSAPP BUTTON
+        ======================================== */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+
+        .floating-whatsapp::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.46-.01z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .floating-whatsapp .tooltip {
+            position: absolute;
+            right: 70px;
+            background: var(--text-dark);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .floating-whatsapp:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .footer {
+            background: #f9fafb;
+            border-top: 1px solid var(--border-light);
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+        ======================================== */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: #ffffff;
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transition: left 0.3s ease;
+                gap: 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .floating-whatsapp {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+            }
+
+            .floating-whatsapp .tooltip {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .price-main {
+                font-size: 2rem;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION BAR
+    ======================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'yomic/images/YOMIC LOGO.jpeg' %}" alt="Yomic Software Solutions">
+                </a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'solutions' %}">Solutions</a></li>
+                <li><a href="{% url 'pricing' %}" class="active">Pricing</a></li>
+                <li><a href="{% url 'company' %}">Company</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         MAIN CONTENT
+    ======================================== -->
+    <main class="main-content">
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Simple, <span>Transparent Pricing</span></h1>
+            <p>Choose the plan that best fits your business needs</p>
+        </div>
+
+        <!-- ========================================
+             MANAGED DEVELOPMENT & MAINTENANCE PLAN
+        ======================================== -->
+        <section class="pricing-section">
+            <div class="section-header">
+                <h2>Managed Development & Maintenance Plan</h2>
+                <p class="subtitle">For clients who want us to build and fully maintain their software.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <h3 class="card-title">Complete Managed Service</h3>
+                    
+                    <div class="price-breakdown">
+                        <p><strong>Setup Investment:</strong> KES 40,000</p>
+                        <p><strong>Monthly Support:</strong> KES 12,000/month</p>
+                    </div>
+
+                    <div class="card-price">
+                        <span class="price-label">Comprehensive package includes:</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>Full system development and deployment</li>
+                        <li>Hosting guidance and setup</li>
+                        <li>Continuous feature upgrades</li>
+                        <li>Performance monitoring and optimization</li>
+                        <li>Security updates and patches</li>
+                        <li>Bug fixes and troubleshooting</li>
+                        <li>Dedicated technical support</li>
+                        <li>Regular system maintenance</li>
+                    </ul>
+
+                    <button class="btn-cta" onclick="contactManaged()">Get Started</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================
+             ONE-TIME DEVELOPMENT & INSTALLATION
+        ======================================== -->
+        <section class="pricing-section">
+            <div class="section-header">
+                <h2>One-Time Development & Installation</h2>
+                <p class="subtitle">For clients who prefer to manage the software themselves after installation.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                
+                <!-- Web Application -->
+                <div class="pricing-card">
+                    <h3 class="card-title">Web Application</h3>
+                    
+                    <div class="card-price">
+                        <span class="price-main">Starting from</span>
+                        <span class="price-main">KES 60,000</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>Custom web-based solution</li>
+                        <li>Responsive design for all devices</li>
+                        <li>User-friendly interface</li>
+                        <li>Database integration</li>
+                        <li>Complete deployment and setup</li>
+                        <li>Initial training included</li>
+                        <li>Documentation provided</li>
+                    </ul>
+
+                    <button class="btn-cta btn-whatsapp" onclick="contactPackage('Web Application')">Chat on WhatsApp</button>
+                </div>
+
+                <!-- Mobile Application -->
+                <div class="pricing-card">
+                    <h3 class="card-title">Mobile Application</h3>
+                    
+                    <div class="card-price">
+                        <span class="price-main">Starting from</span>
+                        <span class="price-main">KES 150,000</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>Native iOS and Android apps</li>
+                        <li>Modern UI/UX design</li>
+                        <li>Push notifications</li>
+                        <li>Offline functionality</li>
+                        <li>API integration</li>
+                        <li>App store deployment</li>
+                        <li>User training and documentation</li>
+                    </ul>
+
+                    <button class="btn-cta btn-whatsapp" onclick="contactPackage('Mobile Application')">Chat on WhatsApp</button>
+                </div>
+
+                <!-- Micro Systems -->
+                <div class="pricing-card">
+                    <h3 class="card-title">Micro Systems</h3>
+                    
+                    <div class="card-price">
+                        <span class="price-main">Starting from</span>
+                        <span class="price-main">KES 30,000</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>Focused single-purpose systems</li>
+                        <li>Inventory management</li>
+                        <li>Point of sale systems</li>
+                        <li>Simple CRM solutions</li>
+                        <li>Quick deployment</li>
+                        <li>Easy to use and maintain</li>
+                        <li>Perfect for small businesses</li>
+                    </ul>
+
+                    <button class="btn-cta btn-whatsapp" onclick="contactPackage('Micro Systems (e.g., Inventory)')">Chat on WhatsApp</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================
+         FLOATING WHATSAPP BUTTON
+    ======================================== -->
+    <a href="https://wa.me/254795013849?text=Hello%20Yomic%20Software%20Solutions%2C%20I%20would%20like%20to%20inquire%20about%20your%20pricing." 
+       class="floating-whatsapp" 
+       target="_blank"
+       aria-label="Chat on WhatsApp">
+        <span class="tooltip">Chat with us on WhatsApp</span>
+    </a>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="{% url 'company' %}">Company</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2026 Yomic Software Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+    <script>
+        /**
+         * Toggle mobile navigation menu
+         */
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        /**
+         * Close mobile menu when clicking outside
+         */
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        /**
+         * Contact for Managed Development Plan
+         */
+        function contactManaged() {
+            const phoneNumber = '254795013849';
+            const message = 'Hello Yomic Software Solutions, I am interested in the Managed Development & Maintenance Plan (40,000 deposit + 12,000 monthly). Kindly share full details.';
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        /**
+         * Contact for specific package
+         * @param {string} packageName - The name of the package
+         */
+        function contactPackage(packageName) {
+            const phoneNumber = '254795013849';
+            const message = `Hello Yomic Software Solutions, I am interested in the ${packageName} package. Kindly provide more information.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            window.open(whatsappURL, '_blank');
+        }
+    </script>
+</body>
+</html>

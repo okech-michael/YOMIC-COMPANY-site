@@ -1,0 +1,783 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company - Yomic Software Solutions</title>
+    <style>
+        /* ========================================
+           GLOBAL STYLES
+        ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+        }
+
+        :root {
+            --primary-green: #10b981;
+            --primary-blue: #3b82f6;
+            --primary-red: #ef4444;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-light: #e5e7eb;
+            --hover-bg: #f9fafb;
+        }
+
+        /* ========================================
+           NAVIGATION BAR
+        ======================================== */
+        .navbar {
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-green);
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+        }
+
+        /* ========================================
+           MAIN CONTENT CONTAINER
+        ======================================== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Section Spacing */
+        .section {
+            margin-bottom: 5rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-title span {
+            color: var(--primary-blue);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* ========================================
+           ABOUT & SERVICES SECTION
+        ======================================== */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .about-text h2 span {
+            color: var(--primary-green);
+        }
+
+        .about-text h3 {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .location::before {
+            content: '';
+            font-size: 1.2rem;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Services & Professionals Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: #ffffff;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-green);
+        }
+
+        .service-card h4 {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Professionals Section */
+        .professionals-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .professional-tag {
+            background: var(--hover-bg);
+            border: 1px solid var(--border-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .professional-tag:hover {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+
+        /* ========================================
+           TESTIMONIALS SECTION
+        ======================================== */
+        .testimonials {
+            background: var(--hover-bg);
+            padding: 4rem 2rem;
+            margin-left: -2rem;
+            margin-right: -2rem;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-blue);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-text {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h5 {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* ========================================
+           CAREERS SECTION
+        ======================================== */
+        .careers {
+            text-align: center;
+            background: linear-gradient(135deg, #f0fdf4, #dbeafe);
+            padding: 4rem 2rem;
+            margin-left: -2rem;
+            margin-right: -2rem;
+            border-radius: 0;
+        }
+
+        .careers-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .careers h2 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .careers h2 span {
+            color: var(--primary-green);
+        }
+
+        .careers p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .btn-apply {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-apply:hover {
+            background: var(--primary-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .footer {
+            background: #f9fafb;
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-light);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+        ======================================== */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: #ffffff;
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transition: left 0.3s ease;
+                gap: 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .careers h2 {
+                font-size: 1.8rem;
+            }
+
+            .testimonials-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .testimonials,
+            .careers {
+                margin-left: -1rem;
+                margin-right: -1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .about-text h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION BAR
+    ======================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'yomic/images/YOMIC LOGO.jpeg' %}" alt="Yomic Software Solutions">
+                </a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'solutions' %}">Solutions</a></li>
+                <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                <li><a href="{% url 'company' %}" class="active">Company</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         MAIN CONTENT
+    ======================================== -->
+    <main class="main-content">
+        
+        <!-- ========================================
+             ABOUT & SERVICES SECTION
+        ======================================== -->
+        <section class="section">
+            <div class="about-container">
+                <!-- Left Column: About Text -->
+                <div class="about-text">
+                    <h2>About <span>Yomic Software Solutions</span></h2>
+                    <p class="location">Kisii, Kenya</p>
+                    
+                    <h3>Our Mission</h3>
+                    <p>
+                        To empower businesses across Africa with innovative, reliable, and scalable software solutions that drive efficiency, growth, and digital transformation.
+                    </p>
+
+                    <h3>Our Vision</h3>
+                    <p>
+                        To become the leading software development partner in Kenya and beyond, recognized for excellence, innovation, and commitment to client success.
+                    </p>
+
+                    <h3>What We Do</h3>
+                    <p>
+                        Yomic Software Solutions specializes in custom software development, delivering web applications, mobile apps, enterprise systems, and micro solutions tailored to meet the unique needs of our clients. From education to healthcare, finance to retail, we transform ideas into powerful digital solutions.
+                    </p>
+                </div>
+
+                <!-- Right Column: Image -->
+                <div class="about-image">
+                    <img src="{% static 'yomic/images/von.jpg' %}" alt="Yomic Software Solutions Team">
+                </div>
+            </div>
+
+            <!-- Services Provided -->
+            <div>
+                <h2 class="section-title">Our <span>Services</span></h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h4>Custom Software Development</h4>
+                        <p>Tailored solutions built to meet your specific business requirements</p>
+                    </div>
+                    <div class="service-card">
+                        <h4>Web Application Development</h4>
+                        <p>Responsive, scalable web applications for modern businesses</p>
+                    </div>
+                    <div class="service-card">
+                        <h4>Mobile App Development</h4>
+                        <p>Native iOS and Android applications with exceptional user experience</p>
+                    </div>
+                    <div class="service-card">
+                        <h4>Enterprise Systems</h4>
+                        <p>Comprehensive management systems for large organizations</p>
+                    </div>
+                    <div class="service-card">
+                        <h4>Cloud Solutions & Hosting</h4>
+                        <p>Secure cloud infrastructure and hosting guidance</p>
+                    </div>
+                    <div class="service-card">
+                        <h4>Maintenance & Support</h4>
+                        <p>Ongoing technical support and system maintenance services</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professionals Section -->
+            <div style="margin-top: 3rem;">
+                <h2 class="section-title">Our <span>Team</span></h2>
+                <p class="section-subtitle">Experienced professionals dedicated to your success</p>
+                <div class="professionals-list">
+                    <span class="professional-tag">Full-Stack Developers</span>
+                    <span class="professional-tag">Frontend Specialists</span>
+                    <span class="professional-tag">Backend Engineers</span>
+                    <span class="professional-tag">Mobile Developers</span>
+                    <span class="professional-tag">UI/UX Designers</span>
+                    <span class="professional-tag">Database Architects</span>
+                    <span class="professional-tag">DevOps Engineers</span>
+                    <span class="professional-tag">Quality Assurance</span>
+                    <span class="professional-tag">Technical Support</span>
+                    <span class="professional-tag">Project Managers</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================
+         TESTIMONIALS SECTION
+    ======================================== -->
+    <section class="testimonials">
+        <div class="testimonials-container">
+            <h2 class="section-title">What Our <span>Clients Say</span></h2>
+            <p class="section-subtitle">Trusted by organizations across Kenya</p>
+
+            <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Ajira Digital Kisii University highly recommends Yomic Software Solutions for delivering reliable, scalable and impactful digital systems. Their professionalism and technical expertise are unmatched."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="{% static 'yomic/images/ajira.jpeg' %}" alt="Client" class="author-image">
+                        <div class="author-info">
+                            <h5>Ajira Digital</h5>
+                            <p>Kisii University</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Working with Yomic has transformed how we manage our operations. The inventory system they built is efficient, user-friendly, and has saved us countless hours of manual work."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="{% static 'yomic/images/sarah.jfif' %}" alt="Client" class="author-image">
+                        <div class="author-info">
+                            <h5>Sarah Mwangi</h5>
+                            <p>Retail Manager</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The team at Yomic delivered our school management system on time and within budget. Their ongoing support has been exceptional, and the system continues to exceed our expectations."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="{% static 'yomic/images/omondi.jfif' %}" alt="Client" class="author-image">
+                        <div class="author-info">
+                            <h5>John Omondi</h5>
+                            <p>School Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         CAREERS SECTION
+    ======================================== -->
+    <section class="careers">
+        <div class="careers-container">
+            <h2>Join Our <span>Team</span></h2>
+            <p>
+                Are you a passionate software developer looking for exciting opportunities? We're always searching for talented individuals to join our growing team. Whether you're an experienced professional or seeking an internship to kickstart your career, we'd love to hear from you.
+            </p>
+            <p>
+                We offer a collaborative work environment, opportunities for professional growth, and the chance to work on impactful projects that transform businesses across Kenya.
+            </p>
+            <a href="mailto:yomicmike@gmail.com?subject=Application%20for%20Software%20Developer%20%2F%20Internship%20at%20Yomic%20Software%20Solutions&body=Dear%20Yomic%20Team%2C%0A%0AI%20am%20interested%20in%20applying%20for%20a%20software%20developer%20or%20internship%20role%20at%20Yomic%20Software%20Solutions.%20Kindly%20find%20my%20CV%20attached.%0A%0ARegards%2C%0A%5BYour%20Name%5D" 
+               class="btn-apply">
+                Apply via Email
+            </a>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo & Description -->
+                <div class="footer-section footer-logo">
+                    <img src="{% static 'yomic/images/YOMIC LOGO.jpeg' %}" alt="Yomic Software Solutions">
+                    <p>Empowering businesses with innovative software solutions.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="{% url 'company' %}">About Us</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="{% url 'company' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="{% url 'solutions' %}">Web Development</a></li>
+                        <li><a href="{% url 'solutions' %}">Mobile Apps</a></li>
+                        <li><a href="{% url 'solutions' %}">Enterprise Systems</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="{% url 'contact' %}">Get in Touch</a></li>
+                        <li><a href="mailto:yomicmike@gmail.com">yomicmike@gmail.com</a></li>
+                        <li><a href="tel:+254795013849">+254 795 013 849</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Yomic Software Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+    <script>
+        /**
+         * Toggle mobile navigation menu
+         */
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        /**
+         * Close mobile menu when clicking outside
+         */
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

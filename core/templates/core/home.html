@@ -1,0 +1,915 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yomic Software Solutions - Powering Innovation</title>
+    <style>
+        /* ========================================
+           GLOBAL STYLES
+        ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --primary-green: #10b981;
+            --primary-blue: #3b82f6;
+            --primary-red: #ef4444;
+            --dark-bg: #1f2937;
+            --light-bg: #f9fafb;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        /* ========================================
+           NAVIGATION BAR
+        ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links .btn-contact {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+        }
+
+        .nav-links .btn-contact::after {
+            display: none;
+        }
+
+        .nav-links .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            color: var(--white);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .hero {
+            margin-top: 80px;
+            height: 600px;
+            background-image: url("{% static 'images/hero-bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.3), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #e5e7eb;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-image {
+    width: 45%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+        /* ========================================
+           PRODUCTS SECTION
+        ======================================== */
+        .products {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .product-card h3 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        /* ========================================
+           SERVICES SECTION
+        ======================================== */
+        .services {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .service-box {
+            position: relative;
+        }
+
+        .service-trigger {
+            background: transparent;
+            border: 3px solid var(--primary-green);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-trigger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            transition: all 0.4s ease;
+            z-index: 0;
+        }
+
+        .service-trigger:hover::before {
+            left: 0;
+        }
+
+        .service-trigger h3 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .service-trigger:hover h3 {
+            color: var(--white);
+        }
+
+        .service-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: var(--white);
+            border-radius: 15px;
+            margin-top: 1rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-content.active {
+            max-height: 500px;
+        }
+
+        .service-content ul {
+            list-style: none;
+            padding: 2rem;
+        }
+
+        .service-content li {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-content li:last-child {
+            border-bottom: none;
+        }
+
+        .service-content li:hover {
+            padding-left: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .view-all-btn {
+            display: block;
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 0 0 15px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+        }
+
+        /* ========================================
+           STATISTICS SECTION
+        ======================================== */
+        .statistics {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .stats-numbers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-bg);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .stats-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========================================
+           TESTIMONIAL SECTION
+        ======================================== */
+        .testimonial {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #ecfdf5, #dbeafe);
+        }
+
+        .testimonial-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .testimonial-text {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 6rem;
+            color: var(--primary-green);
+            opacity: 0.3;
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-text blockquote {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            font-size: 1.1rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .testimonial-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .footer {
+            background: var(--dark-bg);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-green);
+            padding-left: 5px;
+        }
+
+        .footer-logo img {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo p {
+            color: #9ca3af;
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            border-top: 2px solid;
+            border-image: linear-gradient(90deg, var(--primary-green), var(--primary-blue)) 1;
+            padding-top: 2rem;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+        ======================================== */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-container,
+            .testimonial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                transition: left 0.3s ease;
+                gap: 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+            }
+
+            .hero {
+                height: 500px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .products-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-numbers {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION BAR
+    ======================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'yomic/images/YOMIC LOGO.jpeg' %}" alt="Yomic Software Solutions">
+                </a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'solutions' %}">Solutions</a></li>
+                <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                <li><a href="{% url 'company' %}">Company</a></li>
+                <li><a href="{% url 'contact' %}" class="btn-contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         HERO SECTION
+    ======================================== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-inner">
+            <div class="hero-text">
+                <h1>Powering Innovation Through <span>Smart Software Solutions</span></h1>
+                <p>Transform your business with cutting-edge technology. We deliver scalable, reliable, and impactful digital systems tailored to your unique needs.</p>
+                <a href="{% url 'solutions' %}" class="btn-primary">Get Started</a>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'yomic/images/onyango.png' %}" alt="Yomic Software Solutions">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         PRODUCTS SECTION
+    ======================================== -->
+    <section class="products">
+        <div class="section-header">
+            <h2>Our Products</h2>
+            <p>Innovative solutions designed to streamline your operations and drive growth</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <h3>LibraryHub</h3>
+                <p>A comprehensive library management system that digitizes book cataloging, borrowing, and inventory tracking. Empower your institution with seamless library operations.</p>
+                <a href="{% url 'solutions' %}" class="btn-secondary">Learn More</a>
+            </div>
+            <div class="product-card">
+                <h3>Nomads System</h3>
+                <p>Advanced management solution for streamlined operations, data analytics, and process automation. Built for efficiency and scalability across diverse industries.</p>
+                <a href="{% url 'solutions' %}" class="btn-secondary">Learn More</a>
+            </div>
+            <div class="product-card">
+                <h3>PayAfrip</h3>
+                <p>Secure and efficient payment processing platform designed for African businesses. Accept payments, manage transactions, and grow your revenue seamlessly.</p>
+                <a href="{% url 'solutions' %}" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SERVICES SECTION
+    ======================================== -->
+    <section class="services">
+        <div class="services-container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Customized solutions tailored to your specific needs and industry</p>
+            </div>
+            <div class="services-grid">
+                <!-- Service Box 1: Design Based on Your Need -->
+                <div class="service-box">
+                    <div class="service-trigger" onclick="toggleService('service1')">
+                        <h3>Design Based on Your Need</h3>
+                    </div>
+                    <div class="service-content" id="service1">
+                        <ul>
+                            <li>Financial Management System</li>
+                            <li>Project Management System</li>
+                            <li>Inventory System</li>
+                            <li>Customer Relationship Management (CRM)</li>
+                        </ul>
+                        <a href="{% url 'solutions' %}" class="view-all-btn">View All</a>
+                    </div>
+                </div>
+
+                <!-- Service Box 2: Design Based on Your Industry -->
+                <div class="service-box">
+                    <div class="service-trigger" onclick="toggleService('service2')">
+                        <h3>Design Based on Your Industry</h3>
+                    </div>
+                    <div class="service-content" id="service2">
+                        <ul>
+                            <li>Education</li>
+                            <li>Corporate</li>
+                            <li>SACCOS</li>
+                            <li>Government & Parastatals</li>
+                        </ul>
+                        <a href="{% url 'solutions' %}" class="view-all-btn">View All</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         STATISTICS SECTION
+    ======================================== -->
+    <section class="statistics">
+        <div class="stats-container">
+            <div class="stats-numbers">
+                <div class="stat-item">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">120+</div>
+                    <div class="stat-label">Projects Delivered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7+</div>
+                    <div class="stat-label">Years of Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Top Talent Developers</div>
+                </div>
+            </div>
+            <div class="stats-image">
+                <img src="{% static 'yomic/images/yoimc lady.jpg' %}" alt="Yomic Team Excellence">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         TESTIMONIAL SECTION
+    ======================================== -->
+    <section class="testimonial">
+        <div class="testimonial-container">
+            <div class="testimonial-text">
+                <blockquote>
+                    AJIRA KSU proudly recommends Yomic Plc for the outstanding work delivered in designing and developing our official website. The team demonstrated strong professionalism, technical expertise, and a clear understanding of our needs as a digital empowerment community. They delivered a modern, responsive, and user-friendly platform that has significantly enhanced our online presence and improved communication with our members. Their dedication to quality, timely delivery, and continuous support truly sets them apart. We confidently recommend Yomic Plc to any organization seeking reliable, innovative, and impactful software solutions.
+
+                </blockquote>
+                <p class="testimonial-author">— Ajira Digital, Kisii University</p>
+            </div>
+            <div class="testimonial-image">
+                <img src="{% static 'yomic/images/KSU ajira.jfif' %}" alt="Client Testimonial">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section footer-logo">
+                <img src="{% static 'yomic/images/YOMIC LOGO.jpeg' %}" alt="Yomic Software Solutions">
+                <p>Empowering businesses with innovative software solutions that drive growth and efficiency.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'company' %}">Company</a></li>
+                    <li><a href="{% url 'company' %}">Testimonies</a></li>
+                    <li><a href="{% url 'solutions' %}">Solutions</a></li>
+                    <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="{% url 'solutions' %}">LibraryHub</a></li>
+                    <li><a href="{% url 'solutions' %}">Nomads System</a></li>
+                    <li><a href="{% url 'solutions' %}">PayAfrip</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="{% url 'contact' %}">Get in Touch</a></li>
+                    <li><a href="mailto:info@yomicsoftware.com">info@yomicsoftware.com</a></li>
+                    <li><a href="tel:+254700000000">+254 700 000 000</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Yomic Software Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Toggle service content
+        function toggleService(serviceId) {
+            const serviceContent = document.getElementById(serviceId);
+            const allServices = document.querySelectorAll('.service-content');
+            
+            // Close all other services
+            allServices.forEach(service => {
+                if (service.id !== serviceId) {
+                    service.classList.remove('active');
+                }
+            });
+            
+            // Toggle current service
+            serviceContent.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
